@@ -1,0 +1,28 @@
+{
+  "name": "transaction-list-chart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Chris Price <price.c@gmail.com> (http://chrisprice.io/)",
+  "license": "MIT",
+  "devDependencies": {
+    "chokidar-socket-emitter": "^0.5.1",
+    "jspm": "^0.16.31"
+  },
+  "scripts": {},
+  "jspm": {
+    "dependencies": {
+      "css": "github:systemjs/plugin-css@^0.1.21",
+      "d3-collection": "npm:d3-collection@^0.1.2",
+      "d3-selection": "npm:d3-selection@^0.7.0",
+      "d3-transition": "npm:d3-transition@^0.2.8"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4",
+      "systemjs-hot-reloader": "github:capaj/systemjs-hot-reloader@^0.5.7"
+    }
+  }
+}

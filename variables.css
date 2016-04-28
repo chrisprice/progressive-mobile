@@ -1,0 +1,14 @@
+
+:root {
+  --teal-1: #08abba;
+  --teal-2: rgba(193, 235, 239, 0.3);
+  --teal-3: rgba(30, 171, 185, 0.2);
+  --red: #ff8686;
+  --grey-1: #888;
+  --grey-2: #b7b7b7;
+  --grey-3: #c4c4c4;
+  --grey-4: #e8e8e8;
+  --white: #fff;
+  --font-size: 12px;
+  --large-font-size: 16px;
+}

@@ -1,0 +1,29 @@
+.timeline>ul {
+  padding-left: 12%;
+  padding-right: 6%;
+}
+
+.timeline>ul>.day {
+  list-style: none;
+}
+
+.timeline>ul>.day>h2 {
+  font-size: var(--large-font-size);
+  font-weight: normal;
+  color: var(--teal-1);
+  margin: 0;
+}
+
+.timeline>ul>.day>h2>span {
+  font-weight: bold;
+}
+
+.timeline>ul>.day>ul {
+  padding-left: 0;
+}
+
+.timeline>ul>.day>ul>li {
+  list-style: none;
+  margin: 5% 0 5% -2%;
+  height: 36px;
+}

@@ -1,0 +1,1 @@
+module.exports = require("npm:d3-collection@0.1.2/build/d3-collection.js");

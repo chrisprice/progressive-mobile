@@ -1,0 +1,41 @@
+.transaction {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 12%;
+}
+
+.transaction>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.transaction>div>* {
+  margin: 0;
+}
+
+.transaction>div:last-child>* {
+  text-align: right;
+}
+
+.transaction>div>h3 {
+  font-size: var(--large-font-size);
+  font-weight: normal;
+}
+
+.transaction>div>h3>span {
+  font-weight: bold;
+}
+
+.transaction.paid>div:last-child>h3 {
+  color: var(--red);
+}
+
+.transaction>div>p {
+  font-weight: lighter;
+}
+
+.transaction.over-budget>div:last-child>p {
+  color: var(--red);
+}

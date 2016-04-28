@@ -1,0 +1,40 @@
+.calendar>table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar th {
+  font-weight: lighter;
+  width: calc(100% / 7);
+  height: calc(var(--font-size) + 2 * 4px);
+}
+
+.calendar td {
+  height: calc(var(--font-size) + 2 * 10px);
+  text-align: center;
+  font-weight: bold;
+  color: var(--grey-3);
+  background: var(--grey-4);
+  border: 1px solid var(--teal-3);
+}
+
+.calendar td:first-child {
+  border-left: none;
+}
+
+ .calendar td:last-child {
+   border-right: none;
+ }
+
+.calendar td.active-month {
+  background: var(--white);
+}
+
+.calendar td.visible {
+  background: var(--teal-3);
+}
+
+.calendar td.active-day {
+  font-weight: normal;
+  color: var(--teal-1);
+}
