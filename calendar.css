@@ -13,7 +13,7 @@
   height: calc(var(--font-size) + 2 * 10px);
   text-align: center;
   font-weight: bold;
-  color: var(--grey-3);
+  background: var(--teal-3);
   background: var(--grey-4);
   border: 1px solid var(--teal-3);
 }
@@ -30,11 +30,11 @@
   background: var(--white);
 }
 
-.calendar td.visible {
-  background: var(--teal-3);
+.calendar td.future {
+  color: var(--grey-3);
 }
 
-.calendar td.active-day {
+.calendar td.active-date {
   font-weight: normal;
   color: var(--teal-1);
 }

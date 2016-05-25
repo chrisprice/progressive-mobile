@@ -13,13 +13,18 @@
   "scripts": {},
   "jspm": {
     "dependencies": {
+      "chai": "npm:chai@^3.5.0",
       "css": "github:systemjs/plugin-css@^0.1.21",
       "d3-collection": "npm:d3-collection@^0.1.2",
       "d3-selection": "npm:d3-selection@^0.7.0",
-      "d3-transition": "npm:d3-transition@^0.2.8"
+      "d3-transition": "npm:d3-transition@^0.2.8",
+      "normalize.css": "github:necolas/normalize.css@^4.1.1",
+      "react": "npm:react@^15.0.1",
+      "react-dom": "npm:react-dom@^15.0.1"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
+      "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@^6.7.5",
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4",
       "systemjs-hot-reloader": "github:capaj/systemjs-hot-reloader@^0.5.7"
