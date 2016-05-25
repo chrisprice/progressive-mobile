@@ -10,6 +10,7 @@ import * as calendar from '../test/calendarSpec';
       .forEach((name) => {
         try {
           calendar[name](expect)
+          console.log('Pass:', name);
         }
         catch(e) {
           console.error('Failure:', name, e);

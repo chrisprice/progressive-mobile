@@ -8,6 +8,11 @@ System.config({
     ],
     "blacklist": []
   },
+  paths: {
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*"
+  },
+
   packages: {
     "lib": {
       "defaultExtension": "jsx",
@@ -18,10 +23,6 @@ System.config({
       }
     }
   },
-  paths: {
-    "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
-  },
   trace: true,
 
   map: {
@@ -29,6 +30,7 @@ System.config({
     "babel-plugin-transform-react-jsx": "npm:babel-plugin-transform-react-jsx@6.7.5",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "chai": "npm:chai@3.5.0",
+    "classnames": "npm:classnames@2.2.5",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.21",
     "d3-collection": "npm:d3-collection@0.1.2",
