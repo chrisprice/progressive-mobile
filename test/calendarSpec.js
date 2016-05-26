@@ -1,8 +1,8 @@
-import { firstDayOfWeek, weeksOfDays } from '../lib/calendar/calendar';
+import { firstDayOfWeek, weeksOfDays } from '../lib/calendar/calendar'
 
 export const testFirstDayOfWeek = (expect) => {
-  expect(firstDayOfWeek(new Date(1461665762122)).getTime()).to.equal(1461579362122);
-};
+  expect(firstDayOfWeek(new Date(1461665762122)).getTime()).to.equal(1461579362122)
+}
 
 export const testWeeksOfDays = (expect) => {
   expect(weeksOfDays(new Date(1461665762122))).to.deep.equal(
@@ -23,4 +23,4 @@ export const testWeeksOfDays = (expect) => {
         { date: 8, activeMonth: false, activeDate: false, future: true }
     ]
   )
-};
+}

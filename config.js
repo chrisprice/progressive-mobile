@@ -36,6 +36,7 @@ System.config({
     "d3-collection": "npm:d3-collection@0.1.2",
     "d3-selection": "npm:d3-selection@0.7.0",
     "d3-transition": "npm:d3-transition@0.2.8",
+    "moment": "npm:moment@2.13.0",
     "normalize.css": "github:necolas/normalize.css@4.1.1",
     "react": "npm:react@15.0.1",
     "react-dom": "npm:react-dom@15.0.1",

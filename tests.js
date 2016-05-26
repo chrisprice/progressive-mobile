@@ -1,6 +1,6 @@
-import { expect } from 'chai';
+import { expect } from 'chai'
 
-import * as calendar from '../test/calendarSpec';
+import * as calendar from '../test/calendarSpec'
 
 [
   calendar
@@ -10,10 +10,12 @@ import * as calendar from '../test/calendarSpec';
       .forEach((name) => {
         try {
           calendar[name](expect)
-          console.log('Pass:', name);
+          // eslint-disable-next-line no-console
+          console.log('Pass:', name)
         }
         catch(e) {
-          console.error('Failure:', name, e);
+          // eslint-disable-next-line no-console
+          console.error('Failure:', name, e)
         }
       })
-  );
+  )
