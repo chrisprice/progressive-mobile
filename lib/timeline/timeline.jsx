@@ -54,7 +54,7 @@ export default class Timeline extends React.Component {
     const previousDate = this.visibleDates[0]
     this.visibleDates =
       rows.filter((row, i) => startIndex <= i && i <= stopIndex)
-        .map(row => row.date)
+        .map(row => row.formattedDate)
     if (previousDate != this.visibleDates[0]) {
       const date = rows[startIndex].date.toISOString()
       this.props.selectDate(date)
@@ -66,7 +66,7 @@ export default class Timeline extends React.Component {
     const rows = generateRows(transactions)
     const formattedDate = moment(date).format(DATE_FORMAT)
     const scrollToIndex = this.visibleDates.indexOf(formattedDate) > -1 ?
-      undefined : rows.findIndex(r => r.date === formattedDate)
+      undefined : rows.findIndex(r => r.formattedDate === formattedDate)
     return (
       <section className="timeline">
         <AutoSizer>
