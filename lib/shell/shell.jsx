@@ -6,9 +6,9 @@ import Navigation from '../navigation/navigation'
 import Calendar from '../calendar/calendar'
 import Timeline from '../timeline/timeline'
 
-export default ({ account, date, transactions }) =>
-  <div>
+export default ({ account, date, transactions, selectDate }) =>
+  <div className="shell">
     <Navigation/>
-    <Calendar date={date}/>
-    <Timeline account={account} transactions={transactions}/>
+    <Calendar date={date} selectDate={selectDate}/>
+    <Timeline date={date} account={account} transactions={transactions} selectDate={selectDate}/>
   </div>

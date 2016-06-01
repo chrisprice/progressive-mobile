@@ -1,6 +1,11 @@
 import React from 'react'
 import classNames from 'classnames'
 import './calendar.css!'
+import moment from 'moment'
+
+if (System.env === 'development') {
+  System.import('../../test/calendarSpec.js')
+}
 
 const FIRST_DAY_OF_WEEK = 1
 const DAYS_IN_A_WEEK = 7
@@ -35,7 +40,8 @@ export const weeksOfDays = (activeDate) => {
   }
   return dates.map(
     date => ({
-      date: date.getDate(),
+      date: moment(date).startOf('day').toISOString(),
+      display: date.getDate(),
       activeMonth: date.getMonth() === activeDate.getMonth(),
       activeDate: date.getDate() === activeDate.getDate(),
       future: date > activeDate
@@ -49,11 +55,15 @@ export const classes = (day) => classNames({
   'historic': !day.future
 })
 
-export const day = (day) =>
-  <td key={day.date} className={classes(day)}>{day.date}</td>
+export const day = (selectDate, day) =>
+  <td key={day.date}
+      className={classes(day)}
+      onClick={() => selectDate(day.date)}>
+      {day.display}
+  </td>
 
 export default (props) => {
-  const days = weeksOfDays(props.date)
+  const days = weeksOfDays(moment(props.date).toDate())
   return (
     <section className="calendar">
       <table>
@@ -72,7 +82,7 @@ export default (props) => {
               <tr key={i}>
               {
                 days.slice(i * DAYS_IN_A_WEEK, (i + 1) * DAYS_IN_A_WEEK)
-                  .map(day)
+                  .map(d => day(props.selectDate, d))
               }
               </tr>
             )

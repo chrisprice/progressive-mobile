@@ -3,7 +3,11 @@ import HotReloader from 'systemjs-hot-reloader'
 const hotReloader = new HotReloader('http://localhost:5776')
 
 let name
-hotReloader.on('change', _name => name = _name)
+hotReloader.on('change', _name => {
+  name = _name
+  // eslint-disable-next-line no-console
+  console.clear()
+})
 
 hotReloader.on('moduleRecordNotFound', () => {
   if (name.endsWith('.css')) {

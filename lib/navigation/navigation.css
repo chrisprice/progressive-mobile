@@ -1,7 +1,7 @@
-
 .navigation {
   display: flex;
   justify-content: space-between;
+  min-height: calc(var(--large-font-size) * 2.5);
 }
 
 .navigation>button {

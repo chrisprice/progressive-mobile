@@ -1,48 +1,85 @@
 import React from 'react'
 import './timeline.css!'
+import 'react-virtualized/styles.css!'
+import { AutoSizer, VirtualScroll } from 'react-virtualized'
 import Transaction from '../transaction/Transaction'
 import moment from 'moment'
 
-const groupByDay = (transactions) =>
-  transactions.reduce((groups, tx) => {
-    const date = moment(tx.created).format('ddd Do MMM')
-    let group = groups.filter(g => g.date === date)[0]
-    if (!group) {
-      group = { date, transactions: [] }
-      groups.push(group)
+if (System.env === 'development') {
+  System.import('../../test/timelineSpec.js')
+}
+
+const DATE_FORMAT = 'ddd Do MMM'
+
+export const generateRows = (transactions) =>
+  transactions.reduce((rows, transaction) => {
+    const previousFormattedDate = rows.length && rows[rows.length - 1].formattedDate
+    const date = moment(transaction.created)
+    const formattedDate = date.format(DATE_FORMAT)
+    if (previousFormattedDate !== formattedDate) {
+      rows = [ ...rows, { date, formattedDate, account_balance: transaction.account_balance } ]
     }
-    group.transactions.push(tx)
-    return groups
+    rows = [ ...rows, { date, formattedDate, transaction } ]
+    return rows
   }, [])
 
 const formatCurrency = (amount) =>
   (amount / 100).toFixed(2)
 
-const transaction = (account, transaction) =>
-  <li key={transaction.id}>
-    <Transaction account={account} transaction={transaction} />
-  </li>
-
-const day = (account, group) =>
-  <li className="day" key={group.date}>
-    <h2>{group.date} {/*force space*/}
+const day = (day) =>
+  <div className="timeline-day">
+    <h2>{day.formattedDate} {/*force space*/}
       <span className="pull-right">
-        £{formatCurrency(group.transactions[0].account_balance)} {/*force space*/}
+        £{formatCurrency(day.account_balance)} {/*force space*/}
         <span className="lighten">left</span>
       </span>
     </h2>
-    <ul>
-      {group.transactions.map((tx) => transaction(account, tx))}
-    </ul>
-  </li>
+  </div>
 
-export default ({ account, transactions }) => {
-  const groups = groupByDay(transactions)
-  return (
-    <section className="timeline">
-      <ul>
-        {groups.map(group => day(account, group))}
-      </ul>
-    </section>
-  )
+const transaction = (account, transaction) =>
+  <div className="timeline-transaction">
+    <Transaction account={account} transaction={transaction} />
+  </div>
+
+const row = (account, row) => row.transaction ?
+  transaction(account, row.transaction) : day(row)
+
+export default class Timeline extends React.Component {
+  constructor(props) {
+    super(props)
+    this.visibleDates = []
+  }
+
+  updateVisibleDates(rows, startIndex, stopIndex) {
+    const previousDate = this.visibleDates[0]
+    this.visibleDates =
+      rows.filter((row, i) => startIndex <= i && i <= stopIndex)
+        .map(row => row.date)
+    if (previousDate != this.visibleDates[0]) {
+      const date = rows[startIndex].date.toISOString()
+      this.props.selectDate(date)
+    }
+  }
+
+  render() {
+    const { account, transactions, date } = this.props
+    const rows = generateRows(transactions)
+    const formattedDate = moment(date).format(DATE_FORMAT)
+    const scrollToIndex = this.visibleDates.indexOf(formattedDate) > -1 ?
+      undefined : rows.findIndex(r => r.date === formattedDate)
+    return (
+      <section className="timeline">
+        <AutoSizer>
+          {
+            ({ height, width }) =>
+              <VirtualScroll width={width} height={height}
+                rowCount={rows.length} rowHeight={50}
+                rowRenderer={({ index }) => row(account, rows[index])}
+                scrollToIndex={scrollToIndex} scrollToAlignment="start"
+                onRowsRendered={({ startIndex, stopIndex }) => this.updateVisibleDates(rows, startIndex, stopIndex)}/>
+          }
+        </AutoSizer>
+      </section>
+    )
+  }
 }
