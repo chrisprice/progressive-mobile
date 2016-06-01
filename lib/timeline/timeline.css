@@ -16,3 +16,7 @@
 .timeline-day>h2>span {
   font-weight: bold;
 }
+
+.Grid.VirtualScroll {
+  outline: none;
+}
