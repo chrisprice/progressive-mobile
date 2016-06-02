@@ -1,0 +1,17 @@
+ellipse.bubble {
+  fill: white;
+  stroke: var(--teal-1);
+}
+
+circle.bubble {
+  fill: var(--teal-1);
+  stroke: var(--teal-1);
+}
+
+circle.bubble.hollow {
+  fill: white;
+}
+
+line.bubble {
+  stroke: var(--teal-1);
+}

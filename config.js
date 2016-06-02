@@ -33,6 +33,7 @@ System.config({
     "classnames": "npm:classnames@2.2.5",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.21",
+    "d3": "npm:d3@3.5.17",
     "d3-collection": "npm:d3-collection@0.1.2",
     "d3-selection": "npm:d3-selection@0.7.0",
     "d3-transition": "npm:d3-transition@0.2.8",

@@ -2,8 +2,10 @@ import React from 'react'
 import './timeline.css!'
 import 'react-virtualized/styles.css!'
 import { AutoSizer, VirtualScroll } from 'react-virtualized'
-import Transaction from '../transaction/Transaction'
+import Transaction from '../transaction/transaction'
 import moment from 'moment'
+import d3 from 'd3'
+import { bubble, BUBBLE_SIZE } from '../graph/graph'
 
 if (System.env === 'development') {
   System.import('../../test/timelineSpec.js')
@@ -11,26 +13,38 @@ if (System.env === 'development') {
 
 const DATE_FORMAT = 'ddd Do MMM'
 
-export const generateRows = (transactions) =>
-  transactions.reduce((rows, transaction) => {
+export const generateRows = (transactions, activeFormattedDate) =>
+  transactions.reduce((rows, transaction, index) => {
     const previousFormattedDate = rows.length && rows[rows.length - 1].formattedDate
     const date = moment(transaction.created)
     const formattedDate = date.format(DATE_FORMAT)
     if (previousFormattedDate !== formattedDate) {
-      rows = [ ...rows, { date, formattedDate, account_balance: transaction.account_balance } ]
+      const row = {
+        date,
+        formattedDate,
+        account_balance: transaction.account_balance,
+        first: index === 0,
+        active: activeFormattedDate === formattedDate,
+        firstDayOfWeek: date.weekday() === 0
+      }
+      rows = [ ...rows, row ]
     }
-    rows = [ ...rows, { date, formattedDate, transaction } ]
+    const row = { date, formattedDate, transaction }
+    rows = [ ...rows, row ]
     return rows
   }, [])
 
 const formatCurrency = (amount) =>
   (amount / 100).toFixed(2)
 
-const day = (day) =>
+const day = (row) =>
   <div className="timeline-day">
-    <h2>{day.formattedDate} {/*force space*/}
+    <svg viewBox={`0 0 ${BUBBLE_SIZE} ${BUBBLE_SIZE}`}
+      ref={node => node && d3.select(node).datum(row).call(bubble)}>
+    </svg>
+    <h2>{row.formattedDate} {/*force space*/}
       <span className="pull-right">
-        £{formatCurrency(day.account_balance)} {/*force space*/}
+        £{formatCurrency(row.account_balance)} {/*force space*/}
         <span className="lighten">left</span>
       </span>
     </h2>
@@ -38,6 +52,9 @@ const day = (day) =>
 
 const transaction = (account, transaction) =>
   <div className="timeline-transaction">
+    <svg viewBox={`0 0 ${BUBBLE_SIZE} ${BUBBLE_SIZE}`}
+      ref={node => node && d3.select(node).datum({ hidden: true }).call(bubble)}>
+    </svg>
     <Transaction account={account} transaction={transaction} />
   </div>
 
@@ -63,8 +80,8 @@ export default class Timeline extends React.Component {
 
   render() {
     const { account, transactions, date } = this.props
-    const rows = generateRows(transactions)
     const formattedDate = moment(date).format(DATE_FORMAT)
+    const rows = generateRows(transactions, formattedDate)
     const scrollToIndex = this.visibleDates.indexOf(formattedDate) > -1 ?
       undefined : rows.findIndex(r => r.formattedDate === formattedDate)
     return (

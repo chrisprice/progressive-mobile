@@ -1,10 +1,26 @@
 .timeline {
   height: 100%;
+  --row-height: 50px
+}
+
+.Grid.VirtualScroll {
+  outline: none;
 }
 
 .timeline-day, .timeline-transaction {
-  padding-left: 12%;
-  padding-right: 6%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: var(--row-height);
+  padding-right: 20px;
+}
+
+.timeline-day>svg, .timeline-transaction>svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--row-height);
 }
 
 .timeline-day>h2 {
@@ -15,8 +31,4 @@
 
 .timeline-day>h2>span {
   font-weight: bold;
-}
-
-.Grid.VirtualScroll {
-  outline: none;
 }
