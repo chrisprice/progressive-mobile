@@ -1,6 +1,7 @@
 import HotReloader from 'systemjs-hot-reloader'
 
-const hotReloader = new HotReloader('http://localhost:5776')
+const hostname = location.host.split(':')[0]
+const hotReloader = new HotReloader(`http://${hostname}:5776`)
 
 let name
 hotReloader.on('change', _name => {
