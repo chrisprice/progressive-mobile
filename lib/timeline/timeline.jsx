@@ -5,7 +5,7 @@ import { AutoSizer, VirtualScroll } from 'react-virtualized'
 import Transaction from '../transaction/transaction'
 import moment from 'moment'
 import d3 from 'd3'
-import { bubble, BUBBLE_SIZE } from '../graph/graph'
+import { bubble, BUBBLE_SIZE, graph } from '../graph/graph'
 
 if (System.env === 'development') {
   System.import('../../test/timelineSpec.js')
@@ -65,6 +65,11 @@ export default class Timeline extends React.Component {
   constructor(props) {
     super(props)
     this.visibleDates = []
+    this.scrollTop = 0
+  }
+
+  updateScrollTop(scrollTop) {
+    this.scrollTop = scrollTop
   }
 
   updateVisibleDates(rows, startIndex, stopIndex) {
@@ -89,11 +94,17 @@ export default class Timeline extends React.Component {
         <AutoSizer>
           {
             ({ height, width }) =>
-              <VirtualScroll width={width} height={height}
-                rowCount={rows.length} rowHeight={50}
-                rowRenderer={({ index }) => row(account, rows[index])}
-                scrollToIndex={scrollToIndex} scrollToAlignment="start"
-                onRowsRendered={({ startIndex, stopIndex }) => this.updateVisibleDates(rows, startIndex, stopIndex)}/>
+              <div>
+                <svg style={{ position: 'absolute' }} width={width} height={height}
+                  ref={(node) => node && d3.select(node).datum({ rows, height, width, offset: -this.scrollTop }).call(graph)}>
+                </svg>
+                <VirtualScroll width={width} height={height}
+                  rowCount={rows.length} rowHeight={50}
+                  rowRenderer={({ index }) => row(account, rows[index])}
+                  scrollToIndex={scrollToIndex} scrollToAlignment="start"
+                  onRowsRendered={({ startIndex, stopIndex }) => this.updateVisibleDates(rows, startIndex, stopIndex)}
+                  onScroll={({ scrollTop }) => this.updateScrollTop(scrollTop)}/>
+              </div>
           }
         </AutoSizer>
       </section>
