@@ -1,18 +1,12 @@
 import d3 from 'd3'
 import './graph.css!'
 import classNames from 'classnames'
+import ease from './ease'
 
 export const ROW_HEIGHT = 50
 export const BUBBLE_SIZE = 25
 export const BUBBLE_INNER_RADIUS = 4
 export const BUBBLE_OUTER_RADIUS = 6
-
-export const ease = ({ index, count, initialDuration }) => {
-  const finalDuration = 1 - initialDuration
-  const itemDurationIncrement = finalDuration / (count - 1)
-  const itemDuration = initialDuration + index * itemDurationIncrement
-  return (t) => d3.ease('sin')(Math.min(t * (Math.PI / 2 / itemDuration), 1))
-}
 
 export const bubble = (selection) => {
   selection.each(function ({ first, last, hidden, active, firstDayOfWeek }) {
@@ -70,6 +64,7 @@ export const graph = (selection) => {
           })
         )
         .filter(d => d.account_balance != null)
+        .slice(0, 12)
 
       const xScale = d3.scale.linear()
         .domain([ data.length - 1, 0 ])
@@ -97,22 +92,26 @@ export const graph = (selection) => {
         .x((d, i) => xScale(i))
         .y((d) => yScale(d.account_balance))
 
+
+      const x = d3.ease('poly-out', 1.5)
+      const y = d3.ease('poly-in', 1.5)
+
       path.transition()
         .ease('linear')
-        .duration(1000)
+        .duration(900)
         .attrTween('d', (d) => (t) => {
           line.x((d, i) =>
             d3.interpolateNumber(
               ROW_HEIGHT/2, xScale(i)
             )(
-              ease({ index: i, count: data.length, initialDuration: 0.3 })(t)
+              x(ease({ index: i, count: data.length, initialDuration: 0.5 })(t))
             )
           )
           line.y((d, i) =>
             d3.interpolateNumber(
               d.offset, yScale(d.account_balance)
             )(
-              ease({ index: i, count: data.length, initialDuration: 0.3 })(t)
+              y(ease({ index: i, count: data.length, initialDuration: 0.5 })(t))
             )
           )
           return line(d)
